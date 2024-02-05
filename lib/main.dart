@@ -26,12 +26,12 @@ class MyApp extends StatelessWidget {
         builder: (context, snap) {
           if (snap.hasData) {
             return BlocProvider<WeatherBloc>(
-              create: (context) => WeatherBloc()..add(FetchWeather(snap.data as Position)),
+              create: (context) => WeatherBloc(snap.data as Position),
               child: const HomeView(),
             );
           } else {
             return const Center(
-              child: CircularProgressIndicator(),
+              child: SizedBox.shrink(),
             );
           }
         },

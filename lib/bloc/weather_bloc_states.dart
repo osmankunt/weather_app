@@ -2,23 +2,16 @@ import 'package:equatable/equatable.dart';
 import 'package:weather/weather.dart';
 
 class WeatherBlocStates extends Equatable {
-  const WeatherBlocStates();
+  const WeatherBlocStates({this.weather, this.viewStatus = "init"});
+
+  final Weather? weather;
+
+  final String viewStatus;
 
   @override
-  List<Object> get props => [];
-}
+  List<Object?> get props => [weather, viewStatus];
 
-final class WeatherInitialState extends WeatherBlocStates {}
-
-final class WeatherLoadingState extends WeatherBlocStates {}
-
-final class WeatherFailureState extends WeatherBlocStates {}
-
-final class WeatherSuccessState extends WeatherBlocStates {
-  Weather weather;
-
-  WeatherSuccessState(this.weather);
-
-  @override
-  List<Object> get props => [weather];
+  WeatherBlocStates copyWith({Weather? weather, String? viewStatus}) {
+    return WeatherBlocStates(weather: weather ?? this.weather, viewStatus: viewStatus ?? this.viewStatus);
+  }
 }

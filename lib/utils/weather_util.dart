@@ -1,8 +1,8 @@
 import 'package:weather/weather.dart';
 
 class WeatherUtil {
-  static String getAssetsInfo(Weather weather) {
-    switch (weather.weatherMain) {
+  static String getAssetsInfo(Weather? weather) {
+    switch (weather?.weatherMain) {
       case 'Clear':
         return 'sunny.png';
       case 'Drizzle':
