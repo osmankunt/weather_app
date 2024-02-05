@@ -1,5 +1,8 @@
 class Constants {
-  String goodMorningText = "Good Morning!";
-  String goodAfternoonText = "Good Afternoon!";
-  String goodEveningText = "Good Evening!";
+  // home page main message
+  static String goodMorningText = "Good Morning!";
+  static String goodAfternoonText = "Good Afternoon!";
+  static String goodEveningText = "Good Evening!";
+
+  //
 }
