@@ -4,9 +4,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/bloc/weather_bloc.dart';
 import 'package:weather_app/bloc/weather_bloc_states.dart';
+import 'package:weather_app/utils/weather_util.dart';
 import 'package:weather_app/widgets/custom_widgets.dart';
 
 import '../constant/constants.dart';
+import '../utils/date_util.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -86,10 +88,10 @@ class HomeView extends StatelessWidget {
                           height: 8,
                         ),
                         Image.asset(
-                          'assets/sunny.png',
+                          'assets/${WeatherUtil.getAssetsInfo(state.weather)}',
                         ),
                         const SizedBox(
-                          height: 10,
+                          height: 8,
                         ),
                         Center(
                           child: Text(
@@ -111,7 +113,7 @@ class HomeView extends StatelessWidget {
                         ),
                         Center(
                           child: Text(
-                            getDay(state.weather.date!.weekday),
+                            DateUtil.getDay(state.weather.date!.weekday),
                             style: homeViewTextStyle(Colors.white, size: 15, fontWeight: FontWeight.w200),
                           ),
                         ),
@@ -131,7 +133,7 @@ class HomeView extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Sunrise',
+                                      Constants.sunRiseText,
                                       style: homeViewTextStyle(Colors.white, size: 20),
                                     ),
                                     const SizedBox(
@@ -155,7 +157,7 @@ class HomeView extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Sunset',
+                                      Constants.sunSetText,
                                       style: homeViewTextStyle(Colors.white, size: 20),
                                     ),
                                     const SizedBox(
@@ -190,7 +192,7 @@ class HomeView extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Temp Max',
+                                      Constants.tempMaxText,
                                       style: homeViewTextStyle(Colors.white, size: 18),
                                     ),
                                     const SizedBox(
@@ -214,7 +216,7 @@ class HomeView extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Temp Min',
+                                      Constants.tempMinText,
                                       style: homeViewTextStyle(Colors.white, size: 18),
                                     ),
                                     const SizedBox(
@@ -255,26 +257,5 @@ class HomeView extends StatelessWidget {
         color: color,
       ),
     );
-  }
-
-  String getDay(int dayNumber) {
-    switch (dayNumber) {
-      case 7:
-        return 'Sunday';
-      case 1:
-        return 'Monday';
-      case 2:
-        return 'Tuesday';
-      case 3:
-        return 'Wednesday';
-      case 4:
-        return 'Thursday';
-      case 5:
-        return 'Friday';
-      case 6:
-        return 'Saturday';
-      default:
-        return '';
-    }
   }
 }
