@@ -74,7 +74,9 @@ class HomeView extends StatelessWidget {
                           height: 8,
                         ),
                         Text(
-                          Constants.goodMorningText,
+                          state.weather.date!.hour > 12 && state.weather.date!.hour < 18
+                              ? Constants.goodAfternoonText
+                              : (state.weather.date!.hour < 12 ? Constants.goodMorningText : Constants.goodEveningText),
                           style: homeViewTextStyle(
                             Colors.white,
                             size: 24,
@@ -100,7 +102,7 @@ class HomeView extends StatelessWidget {
                         ),
                         Center(
                           child: Text(
-                            state.weather.cloudiness.toString(),
+                            state.weather.weatherConditionCode.toString(),
                             style: homeViewTextStyle(Colors.white, size: 30, fontWeight: FontWeight.w400),
                           ),
                         ),
@@ -109,7 +111,7 @@ class HomeView extends StatelessWidget {
                         ),
                         Center(
                           child: Text(
-                            "Day: ${state.weather.date!.day.toString()}",
+                            getDay(state.weather.date!.weekday),
                             style: homeViewTextStyle(Colors.white, size: 15, fontWeight: FontWeight.w200),
                           ),
                         ),
@@ -130,14 +132,14 @@ class HomeView extends StatelessWidget {
                                   children: [
                                     Text(
                                       'Sunrise',
-                                      style: homeViewTextStyle(Colors.white),
+                                      style: homeViewTextStyle(Colors.white, size: 20),
                                     ),
                                     const SizedBox(
                                       height: 5,
                                     ),
                                     Text(
-                                      '5.40 am',
-                                      style: homeViewTextStyle(Colors.white),
+                                      '${state.weather.sunrise!.hour}:${state.weather.sunrise!.minute.toString()} am',
+                                      style: homeViewTextStyle(Colors.white, size: 16),
                                     ),
                                   ],
                                 )
@@ -154,14 +156,14 @@ class HomeView extends StatelessWidget {
                                   children: [
                                     Text(
                                       'Sunset',
-                                      style: homeViewTextStyle(Colors.white),
+                                      style: homeViewTextStyle(Colors.white, size: 20),
                                     ),
                                     const SizedBox(
                                       height: 5,
                                     ),
                                     Text(
-                                      '5.40 am',
-                                      style: homeViewTextStyle(Colors.white),
+                                      '${state.weather.sunset!.hour - 12}:${state.weather.sunset!.minute.toString()} pm',
+                                      style: homeViewTextStyle(Colors.white, size: 16),
                                     ),
                                   ],
                                 )
@@ -189,14 +191,14 @@ class HomeView extends StatelessWidget {
                                   children: [
                                     Text(
                                       'Temp Max',
-                                      style: homeViewTextStyle(Colors.white),
+                                      style: homeViewTextStyle(Colors.white, size: 18),
                                     ),
                                     const SizedBox(
                                       height: 5,
                                     ),
                                     Text(
-                                      '5.40 am',
-                                      style: homeViewTextStyle(Colors.white),
+                                      state.weather.tempMax!.celsius.toString().split('.')[0],
+                                      style: homeViewTextStyle(Colors.white, size: 14),
                                     ),
                                   ],
                                 )
@@ -213,14 +215,14 @@ class HomeView extends StatelessWidget {
                                   children: [
                                     Text(
                                       'Temp Min',
-                                      style: homeViewTextStyle(Colors.white),
+                                      style: homeViewTextStyle(Colors.white, size: 18),
                                     ),
                                     const SizedBox(
                                       height: 5,
                                     ),
                                     Text(
-                                      '5.40 am',
-                                      style: homeViewTextStyle(Colors.white),
+                                      state.weather.tempMin!.celsius.toString().split('.')[0],
+                                      style: homeViewTextStyle(Colors.white, size: 14),
                                     ),
                                   ],
                                 )
@@ -253,5 +255,26 @@ class HomeView extends StatelessWidget {
         color: color,
       ),
     );
+  }
+
+  String getDay(int dayNumber) {
+    switch (dayNumber) {
+      case 7:
+        return 'Sunday';
+      case 1:
+        return 'Monday';
+      case 2:
+        return 'Tuesday';
+      case 3:
+        return 'Wednesday';
+      case 4:
+        return 'Thursday';
+      case 5:
+        return 'Friday';
+      case 6:
+        return 'Saturday';
+      default:
+        return '';
+    }
   }
 }
