@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/bloc/weather_bloc.dart';
 import 'package:weather_app/bloc/weather_bloc_states.dart';
+import 'package:weather_app/utils/enum_view_status.dart';
 import 'package:weather_app/utils/weather_util.dart';
 import 'package:weather_app/widgets/custom_widgets.dart';
 
@@ -58,7 +59,7 @@ class HomeView extends StatelessWidget {
             ),
             BlocBuilder<WeatherBloc, WeatherBlocStates>(
               builder: (context, state) {
-                return state.viewStatus == "success"
+                return state.viewStatus == ViewStatus.success
                     ? SizedBox(
                         height: MediaQuery.of(context).size.height,
                         width: MediaQuery.of(context).size.width,
