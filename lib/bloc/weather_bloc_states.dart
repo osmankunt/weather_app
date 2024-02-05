@@ -19,5 +19,6 @@ final class WeatherSuccessState extends WeatherBlocStates {
 
   WeatherSuccessState(this.weather);
 
-  List<Weather> get props => [];
+  @override
+  List<Object> get props => [weather];
 }

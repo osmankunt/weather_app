@@ -3,6 +3,9 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_app/bloc/weather_bloc.dart';
+import 'package:weather_app/bloc/weather_bloc_states.dart';
 import 'package:weather_app/widgets/custom_widgets.dart';
 
 import '../constant/constants.dart';
@@ -66,179 +69,189 @@ class HomeView extends StatelessWidget {
                   decoration: const BoxDecoration(color: Colors.transparent),
                 ),
               ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Istanbul',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    Text(
-                      Constants.goodMorningText,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    Image.asset(
-                      'assets/sunny.png',
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Center(
-                      child: Text(
-                        '21°C',
-                        style: homeViewTextStyle(Colors.white, size: 55, fontWeight: FontWeight.w600),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    Center(
-                      child: Text(
-                        'Sunny',
-                        style: homeViewTextStyle(Colors.white, size: 30, fontWeight: FontWeight.w400),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    Center(
-                      child: Text(
-                        'Monday 13, 09:41 am',
-                        style: homeViewTextStyle(Colors.white, size: 15, fontWeight: FontWeight.w200),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 25,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Image.asset(
-                              'assets/day_time.png',
-                              scale: 8,
+              BlocBuilder<WeatherBloc, WeatherBlocStates>(
+                builder: (context, state) {
+                  if (state is WeatherSuccessState) {
+                    return SizedBox(
+                      height: MediaQuery.of(context).size.height,
+                      width: MediaQuery.of(context).size.width,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "City: ${state.weather.areaName.toString()}",
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
                             ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Sunrise',
-                                  style: homeViewTextStyle(Colors.white),
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                  '5.40 am',
-                                  style: homeViewTextStyle(Colors.white),
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Image.asset(
-                              'assets/day_time.png',
-                              scale: 8,
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          Text(
+                            Constants.goodMorningText,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 24,
                             ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Sunset',
-                                  style: homeViewTextStyle(Colors.white),
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                  '5.40 am',
-                                  style: homeViewTextStyle(Colors.white),
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 5.0),
-                      child: Divider(
-                        height: 10,
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          Image.asset(
+                            'assets/sunny.png',
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Center(
+                            child: Text(
+                              '${state.weather.temperature.toString().split('.')[0]}°C',
+                              style: homeViewTextStyle(Colors.white, size: 55, fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          Center(
+                            child: Text(
+                              state.weather.cloudiness.toString(),
+                              style: homeViewTextStyle(Colors.white, size: 30, fontWeight: FontWeight.w400),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          Center(
+                            child: Text(
+                              "Day: ${state.weather.date!.day.toString()}",
+                              style: homeViewTextStyle(Colors.white, size: 15, fontWeight: FontWeight.w200),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 25,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  Image.asset(
+                                    'assets/day_time.png',
+                                    scale: 8,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Sunrise',
+                                        style: homeViewTextStyle(Colors.white),
+                                      ),
+                                      const SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text(
+                                        '5.40 am',
+                                        style: homeViewTextStyle(Colors.white),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Image.asset(
+                                    'assets/day_time.png',
+                                    scale: 8,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Sunset',
+                                        style: homeViewTextStyle(Colors.white),
+                                      ),
+                                      const SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text(
+                                        '5.40 am',
+                                        style: homeViewTextStyle(Colors.white),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 5.0),
+                            child: Divider(
+                              height: 10,
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  Image.asset(
+                                    'assets/temp_max.png',
+                                    scale: 8,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Temp Max',
+                                        style: homeViewTextStyle(Colors.white),
+                                      ),
+                                      const SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text(
+                                        '5.40 am',
+                                        style: homeViewTextStyle(Colors.white),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Image.asset(
+                                    'assets/temp_min.png',
+                                    scale: 8,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Temp Min',
+                                        style: homeViewTextStyle(Colors.white),
+                                      ),
+                                      const SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text(
+                                        '5.40 am',
+                                        style: homeViewTextStyle(Colors.white),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Image.asset(
-                              'assets/temp_max.png',
-                              scale: 8,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Temp Max',
-                                  style: homeViewTextStyle(Colors.white),
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                  '5.40 am',
-                                  style: homeViewTextStyle(Colors.white),
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Image.asset(
-                              'assets/temp_min.png',
-                              scale: 8,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Temp Min',
-                                  style: homeViewTextStyle(Colors.white),
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                  '5.40 am',
-                                  style: homeViewTextStyle(Colors.white),
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                    );
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                },
               ),
             ],
           ),
