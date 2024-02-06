@@ -7,6 +7,8 @@ class WeatherUtil {
         return 'sunny.png';
       case 'Drizzle':
         return 'drizzle.png';
+      case 'Clouds':
+        return 'cloud.png';
       case 'Snowy':
         return 'snow.png';
       case 'Rainy':

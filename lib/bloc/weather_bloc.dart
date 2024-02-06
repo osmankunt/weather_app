@@ -13,11 +13,20 @@ class WeatherBloc extends Cubit<WeatherBlocStates> {
   void fetchWeather(Position position) async {
     emit(state.copyWith(viewStatus: ViewStatus.loading));
     WeatherFactory weatherFactory = WeatherFactory(Constants.apiKey, language: Language.ENGLISH);
+    print({position.latitude.toString(), position.altitude.toString()});
     Weather weather = await weatherFactory.currentWeatherByLocation(position.latitude, position.altitude);
     emit(state.copyWith(weather: weather, viewStatus: ViewStatus.success));
   }
 
   void setLoading() {
     emit(state.copyWith(viewStatus: ViewStatus.loading));
+  }
+
+  Future<Weather> setByCityName(String cityName) async {
+    emit(state.copyWith(viewStatus: ViewStatus.loading));
+    WeatherFactory weatherFactory = WeatherFactory(Constants.apiKey, language: Language.ENGLISH);
+    Weather weather = await weatherFactory.currentWeatherByCityName(cityName);
+    emit(state.copyWith(weather: weather, viewStatus: ViewStatus.success));
+    return weather;
   }
 }

@@ -2,6 +2,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:weather/weather.dart';
 import 'package:weather_app/bloc/weather_bloc.dart';
 import 'package:weather_app/bloc/weather_bloc_states.dart';
 import 'package:weather_app/utils/enum_view_status.dart';
@@ -90,9 +92,20 @@ class HomeView extends StatelessWidget {
                             const SizedBox(
                               height: 8,
                             ),
-                            Image.asset(
-                              'assets/${WeatherUtil.getAssetsInfo(state.weather)}',
-                            ),
+                            BlocSelector<WeatherBloc, WeatherBlocStates, String>(
+                                selector: (state) => state.weather != null ? "Istanbul" : "London",
+                                builder: (context, state) {
+                                  Future<Weather> weather1 = context.read<WeatherBloc>().setByCityName(state);
+                                  return Container(
+                                    height: 200,
+                                    width: 200,
+                                    color: Colors.blue,
+                                    child: Text(state),
+                                  );
+                                  /* Image.asset(
+                                'assets/${WeatherUtil.getAssetsInfo(state.weather)}',
+                              ); */
+                                }),
                             const SizedBox(
                               height: 8,
                             ),
