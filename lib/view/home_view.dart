@@ -92,28 +92,36 @@ class HomeView extends StatelessWidget {
                             const SizedBox(
                               height: 8,
                             ),
-                            BlocSelector<WeatherBloc, WeatherBlocStates, String>(
-                                selector: (state) => state.weather != null ? "Istanbul" : "London",
-                                builder: (context, state) {
-                                  Future<Weather> weather1 = context.read<WeatherBloc>().setByCityName(state);
-                                  return Container(
-                                    height: 200,
-                                    width: 200,
-                                    color: Colors.blue,
-                                    child: Text(state),
+                            BlocSelector<WeatherBloc, WeatherBlocStates, Weather?>(
+                                selector: (state) => state.weather,
+                                builder: (context, weather) {
+                                  return Column(
+                                    children: [
+                                      Text(
+                                        "City: ${state.weather?.areaName.toString()}",
+                                        style: homeViewTextStyle(
+                                          Colors.white,
+                                          size: 12,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 8,
+                                      ),
+                                      Image.asset(
+                                        'assets/${WeatherUtil.getAssetsInfo(state.weather)}',
+                                        scale: 2,
+                                      ),
+                                      Center(
+                                        child: Text(
+                                          '${state.weather?.temperature.toString().split('.')[0]}°C',
+                                          style: homeViewTextStyle(Colors.white, size: 55, fontWeight: FontWeight.w600),
+                                        ),
+                                      ),
+                                    ],
                                   );
-                                  /* Image.asset(
-                                'assets/${WeatherUtil.getAssetsInfo(state.weather)}',
-                              ); */
                                 }),
                             const SizedBox(
                               height: 8,
-                            ),
-                            Center(
-                              child: Text(
-                                '${state.weather?.temperature.toString().split('.')[0]}°C',
-                                style: homeViewTextStyle(Colors.white, size: 55, fontWeight: FontWeight.w600),
-                              ),
                             ),
                             const SizedBox(
                               height: 8,
@@ -248,6 +256,14 @@ class HomeView extends StatelessWidget {
                                 ),
                               ],
                             ),
+                            const Spacer(),
+                            Center(
+                              child: ElevatedButton(
+                                  onPressed: () {
+                                    context.read<WeatherBloc>().setByCityName("Istanbul");
+                                  },
+                                  child: const Text("City")),
+                            )
                           ],
                         ),
                       )
