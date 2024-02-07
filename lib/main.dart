@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
           if (snap.hasData) {
             return BlocProvider<WeatherBloc>(
               create: (context) => WeatherBloc(snap.data as Position),
-              child: const HomeView(),
+              child: HomeView(),
             );
           } else {
             return const Center(
@@ -35,6 +35,7 @@ class MyApp extends StatelessWidget {
           }
         },
       ),
+      routes: {'/home': (context) => HomeView()},
     );
   }
 }

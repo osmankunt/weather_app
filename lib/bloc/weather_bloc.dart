@@ -22,11 +22,19 @@ class WeatherBloc extends Cubit<WeatherBlocStates> {
     emit(state.copyWith(viewStatus: ViewStatus.loading));
   }
 
-  void setByCityName(String cityName) async {
+  void setFailure() {
+    emit(state.copyWith(viewStatus: ViewStatus.error));
+  }
+
+  void getByCityName(String cityName) async {
     emit(state.copyWith(viewStatus: ViewStatus.loading));
     WeatherFactory weatherFactory = WeatherFactory(Constants.apiKey, language: Language.ENGLISH);
-    Weather weather = await weatherFactory.currentWeatherByCityName(cityName);
-    print(weather);
-    emit(state.copyWith(weather: weather, viewStatus: ViewStatus.success));
+    Weather weather;
+    try {
+      weather = await weatherFactory.currentWeatherByCityName(cityName);
+      emit(state.copyWith(weather: weather, viewStatus: ViewStatus.success));
+    } catch (e) {
+      setFailure();
+    }
   }
 }
