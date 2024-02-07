@@ -6,6 +6,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:weather/weather.dart';
 import 'package:weather_app/bloc/weather_bloc.dart';
 import 'package:weather_app/bloc/weather_bloc_states.dart';
+import 'package:weather_app/utils/random_city.dart';
 import 'package:weather_app/utils/enum_view_status.dart';
 import 'package:weather_app/utils/weather_util.dart';
 import 'package:weather_app/widgets/custom_widgets.dart';
@@ -68,13 +69,6 @@ class HomeView extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              "City: ${state.weather?.areaName.toString()}",
-                              style: homeViewTextStyle(
-                                Colors.white,
-                                size: 12,
-                              ),
-                            ),
                             const SizedBox(
                               height: 8,
                             ),
@@ -89,6 +83,13 @@ class HomeView extends StatelessWidget {
                                 size: 24,
                               ),
                             ),
+                            Text(
+                              "City: ${state.weather?.areaName.toString()}",
+                              style: homeViewTextStyle(
+                                Colors.white,
+                                size: 12,
+                              ),
+                            ),
                             const SizedBox(
                               height: 8,
                             ),
@@ -97,13 +98,6 @@ class HomeView extends StatelessWidget {
                                 builder: (context, weather) {
                                   return Column(
                                     children: [
-                                      Text(
-                                        "City: ${state.weather?.areaName.toString()}",
-                                        style: homeViewTextStyle(
-                                          Colors.white,
-                                          size: 12,
-                                        ),
-                                      ),
                                       const SizedBox(
                                         height: 8,
                                       ),
@@ -260,9 +254,10 @@ class HomeView extends StatelessWidget {
                             Center(
                               child: ElevatedButton(
                                   onPressed: () {
-                                    context.read<WeatherBloc>().setByCityName("Istanbul");
+                                    RandomCity.randomCity.shuffle();
+                                    context.read<WeatherBloc>().setByCityName(RandomCity.randomCity[0]);
                                   },
-                                  child: const Text("City")),
+                                  child: const Text("Random City")),
                             )
                           ],
                         ),

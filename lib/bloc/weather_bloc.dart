@@ -29,6 +29,4 @@ class WeatherBloc extends Cubit<WeatherBlocStates> {
     print(weather);
     emit(state.copyWith(weather: weather, viewStatus: ViewStatus.success));
   }
-
-  void emitByCityName() {}
 }
