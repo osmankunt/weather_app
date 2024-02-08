@@ -1,10 +1,7 @@
 import 'dart:ui';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:weather/weather.dart';
 import 'package:weather_app/bloc/weather_bloc.dart';
 import 'package:weather_app/bloc/weather_bloc_states.dart';
@@ -311,7 +308,7 @@ class HomeView extends StatelessWidget {
                           ),
                         )
                       : state.viewStatus == ViewStatus.error
-                          ? const Center(child: CircularProgressIndicator())
+                          ? _dialog(context)
                           : const Center(child: CircularProgressIndicator());
                 },
               ),
@@ -356,16 +353,12 @@ class HomeView extends StatelessWidget {
       child: TextButton(
         onPressed: () => showDialog<String>(
           context: context,
-          builder: (BuildContext context) => AlertDialog(
+          builder: (BuildContext context1) => AlertDialog(
             title: const Text('AlertDialog Title'),
             content: const Text('AlertDialog description'),
             actions: <Widget>[
               TextButton(
-                onPressed: () => Navigator.pop(context, 'Cancel'),
-                child: const Text('Cancel'),
-              ),
-              TextButton(
-                onPressed: () => Navigator.pushNamed(context, '/home'),
+                onPressed: () => Navigator.pushNamed(context1, '/home'),
                 child: const Text('OK'),
               ),
             ],
