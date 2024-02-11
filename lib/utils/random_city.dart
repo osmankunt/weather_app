@@ -16,5 +16,13 @@ class RandomCity {
     'Warsaw',
     'Prague',
     'Vienna',
+    'Antalya',
+    'Berlin',
+    'Stockholm',
+    'Tokyo',
+    'Seoul',
+    'Washington',
+    'Lisbon',
+    'Copenhagen',
   ];
 }

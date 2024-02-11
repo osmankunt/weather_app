@@ -71,9 +71,6 @@ class HomeView extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const SizedBox(
-                                height: 8,
-                              ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
@@ -99,7 +96,7 @@ class HomeView extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  Container(
+                                  SizedBox(
                                     height: 80,
                                     width: 200,
                                     child: TextField(
@@ -122,16 +119,13 @@ class HomeView extends StatelessWidget {
                                 ],
                               ),
                               const SizedBox(
-                                height: 8,
+                                height: 4,
                               ),
                               BlocSelector<WeatherBloc, WeatherBlocStates, Weather?>(
                                   selector: (state) => state.weather,
                                   builder: (context, weather) {
                                     return Column(
                                       children: [
-                                        const SizedBox(
-                                          height: 8,
-                                        ),
                                         Image.asset(
                                           'assets/${WeatherUtil.getAssetsInfo(state.weather)}',
                                           scale: 2,
@@ -146,10 +140,10 @@ class HomeView extends StatelessWidget {
                                     );
                                   }),
                               const SizedBox(
-                                height: 8,
+                                height: 4,
                               ),
                               const SizedBox(
-                                height: 8,
+                                height: 4,
                               ),
                               Center(
                                 child: Text(
@@ -158,7 +152,7 @@ class HomeView extends StatelessWidget {
                                 ),
                               ),
                               const SizedBox(
-                                height: 8,
+                                height: 4,
                               ),
                               Center(
                                 child: Text(
@@ -167,7 +161,7 @@ class HomeView extends StatelessWidget {
                                 ),
                               ),
                               const SizedBox(
-                                height: 25,
+                                height: 8,
                               ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -281,7 +275,9 @@ class HomeView extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              const Spacer(),
+                              const SizedBox(
+                                height: 20,
+                              ),
                               Column(
                                 children: [
                                   Row(
